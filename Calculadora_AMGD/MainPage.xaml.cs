@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using Xamarin.Forms;
+using System.Globalization;
 
 namespace Calculadora_AMGD
 {
@@ -34,7 +35,7 @@ namespace Calculadora_AMGD
             if (Resultado.Text.Length > 1)
             {
                 Resultado.Text = Resultado.Text.Substring(0, Resultado.Text.Length - 1);
-                numeroActual = double.TryParse(Resultado.Text, out double result) ? result : 0;
+                numeroActual = double.TryParse(Resultado.Text, NumberStyles.Any, CultureInfo.GetCultureInfo("es-ES"), out double result) ? result : 0;
             }
             else
             {
@@ -59,7 +60,7 @@ namespace Calculadora_AMGD
                 Resultado.Text += numero;
             }
 
-            double.TryParse(Resultado.Text, out numeroActual);
+            double.TryParse(Resultado.Text, NumberStyles.Any, CultureInfo.GetCultureInfo("es-ES"), out numeroActual);
         }
 
         void Button_Suma(object sender, EventArgs e)
@@ -133,16 +134,16 @@ namespace Calculadora_AMGD
                         break;
                 }
 
-                Resultado.Text = resultado.ToString();
+                Resultado.Text = resultado.ToString(CultureInfo.GetCultureInfo("es-ES"));
                 resultadoMostrado = true;
             }
         }
 
         void Button_Decimal(object sender, EventArgs e)
         {
-            if (!Resultado.Text.Contains("."))
+            if (!Resultado.Text.Contains(","))
             {
-                Resultado.Text += ".";
+                Resultado.Text += ",";
             }
         }
     }
